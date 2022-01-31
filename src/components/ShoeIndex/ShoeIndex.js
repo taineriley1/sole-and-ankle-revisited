@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-import { WEIGHTS } from '../../constants';
+import { QUERIES, WEIGHTS } from '../../constants';
 
 import Breadcrumbs from '../Breadcrumbs';
 import Select from '../Select';
@@ -13,16 +13,25 @@ const ShoeIndex = ({ sortId, setSortId }) => {
   return (
     <Wrapper>
       <MainColumn>
+        <BreadcrumbsMobile>
+          <Breadcrumbs.Crumb href="/">Home</Breadcrumbs.Crumb>
+          <Breadcrumbs.Crumb href="/sale">Sale</Breadcrumbs.Crumb>
+          <Breadcrumbs.Crumb href="/sale/shoes">
+            Shoes
+          </Breadcrumbs.Crumb>
+        </BreadcrumbsMobile>
         <Header>
           <Title>Running</Title>
-          <Select
-            label="Sort"
-            value={sortId}
-            onChange={(ev) => setSortId(ev.target.value)}
-          >
-            <option value="newest">Newest Releases</option>
-            <option value="price">Price</option>
-          </Select>
+          <MobileHideWrapper>
+            <Select
+              label="Sort"
+              value={sortId}
+              onChange={(ev) => setSortId(ev.target.value)}
+            >
+              <option value="newest">Newest Releases</option>
+              <option value="price">Price</option>
+            </Select>
+          </MobileHideWrapper>
         </Header>
         <Spacer size={32} />
         <ShoeGrid />
@@ -51,6 +60,10 @@ const Wrapper = styled.div`
 
 const LeftColumn = styled.div`
   flex-basis: 248px;
+
+  @media ${QUERIES.tabletAndDown} {
+    display: none;
+  }
 `;
 
 const MainColumn = styled.div`
@@ -67,5 +80,18 @@ const Title = styled.h2`
   font-size: 1.5rem;
   font-weight: ${WEIGHTS.medium};
 `;
+
+const BreadcrumbsMobile = styled(Breadcrumbs)`
+  display: none;
+  @media ${QUERIES.tabletAndDown} {
+    display: flex;
+  }
+`;
+
+const MobileHideWrapper = styled.div`
+  @media ${QUERIES.phoneAndDown} {
+    display: none;
+  }
+`
 
 export default ShoeIndex;
